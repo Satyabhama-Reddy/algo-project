@@ -15,21 +15,32 @@ class Graph:
         self.num_vertices = num_vertices
         self.graph = [None] * self.num_vertices
 
-    def add_edge(self, src, dest, weight):
+    def add_edge(self, src, dest, weight, undirected=True):
         neighbour = Neighbour(dest, weight)
         if self.graph[src] is None:
             self.graph[src] = []
         if neighbour not in self.graph[src]:
             self.graph[src].append(neighbour)
-            if self.graph[dest] is None:
-                self.graph[dest] = []
-            self.graph[dest].append(Neighbour(src, weight))
+            if undirected:
+                if self.graph[dest] is None:
+                    self.graph[dest] = []
+                self.graph[dest].append(Neighbour(src, weight))
+            return True
         else:
+            # Debugging
             print("Edge not added. Edge from {} to {} already exists".format(src, dest))
+            return False
+
+    def get_average_degree(self):
+        sum_degrees = 0
+        for v in self.graph:
+            if v is not None:
+                sum_degrees += len(v)
+        return sum_degrees / self.num_vertices
 
     def print_graph(self):
         for i in range(self.num_vertices):
-            print("{} : ".format(i), end="")
+            print(" {} : ".format(i), end="")
             if self.graph[i] is not None:
                 for ele in self.graph[i]:
                     print(" -> {},{}".format(ele.vertex_id, ele.edge_weight), end="")
