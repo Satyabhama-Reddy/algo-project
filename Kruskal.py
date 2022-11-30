@@ -54,7 +54,6 @@ class Kruskal:
     def Kruskal_BW(self, G, s, t):
         MST = self.Kruskal_MST(G)
         color = [0] * G.num_vertices
-        MST.print_graph()
         path = self.DFS(MST, color, s, t, [])
         #TODO: BW value
         return path
