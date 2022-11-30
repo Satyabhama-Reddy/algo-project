@@ -25,27 +25,25 @@ class MaxHeap:
             return True
         return False
 
-    def swap(self, fpos, spos):
-        self.P[self.H[fpos]], self.P[self.H[spos]] = (self.P[self.H[spos]], self.P[self.H[fpos]])
-        self.H[fpos], self.H[spos] = (self.H[spos], self.H[fpos])
+    def swap(self, i, j):
+        if i != j:
+            self.P[self.H[i]], self.P[self.H[j]] = (self.P[self.H[j]], self.P[self.H[i]])
+            self.H[i], self.H[j] = (self.H[j], self.H[i])
 
     def pushDown(self, pos):
         if not self.isLeaf(pos):
-            leftHighest = None
-            if self.leftIndex(pos) < self.size:
-                if self.value(pos) < self.value(self.leftIndex(pos)):
-                    leftHighest = True
-            if self.rightIndex(pos) < self.size:
-                if self.value(pos) < self.value(self.rightIndex(pos)) and self.value(self.leftIndex(pos)) < self.value(
-                        self.rightIndex(pos)):
-                    leftHighest = False
-            if leftHighest is not None:
-                if leftHighest:
-                    self.swap(pos, self.leftIndex(pos))
-                    self.pushDown(self.leftIndex(pos))
-                else:
-                    self.swap(pos, self.rightIndex(pos))
-                    self.pushDown(self.rightIndex(pos))
+            largest = None
+            li = self.leftIndex(pos)
+            ri = self.rightIndex(pos)
+
+            if li < self.size and self.value(pos) < self.value(li):
+                largest = li
+            if ri < self.size and (self.value(pos) < self.value(ri) and self.value(ri) > self.value(li)):
+                largest = ri
+
+            if largest is not None:
+                self.swap(pos, largest)
+                self.pushDown(largest)
 
     def insert(self, vertex, value):
 
@@ -65,7 +63,7 @@ class MaxHeap:
             current = self.parentIndex(current)
 
     def assertHeapProperty(self):
-        for i in range((self.size) // 2):
+        for i in range(self.size // 2):
             if 2 * i + 1 < self.size:
                 assert self.value(2 * i + 1) <= self.value(i)
                 if 2 * i + 2 < self.size:

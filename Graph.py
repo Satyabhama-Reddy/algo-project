@@ -10,20 +10,31 @@ class Neighbour:
             return False
 
 
+class Edge:
+    def __init__(self, u, v, w):
+        self.u = u
+        self.v = v
+        self.w = w
+
+    def __eq__(self, other):
+        if self.w == other.w:
+            return True
+        else:
+            return False
+
+
 class Graph:
     def __init__(self, num_vertices):
         self.num_vertices = num_vertices
-        self.graph = [None] * self.num_vertices
+        self.graph = []
+        for i in range(num_vertices):
+            self.graph.append([])
 
     def add_edge(self, src, dest, weight, undirected=True):
         neighbour = Neighbour(dest, weight)
-        if self.graph[src] is None:
-            self.graph[src] = []
         if neighbour not in self.graph[src]:
             self.graph[src].append(neighbour)
             if undirected:
-                if self.graph[dest] is None:
-                    self.graph[dest] = []
                 self.graph[dest].append(Neighbour(src, weight))
             return True
         else:
@@ -34,21 +45,25 @@ class Graph:
     def get_average_degree(self):
         sum_degrees = 0
         for v in self.graph:
-            if v is not None:
-                sum_degrees += len(v)
+            sum_degrees += len(v)
         return sum_degrees / self.num_vertices
 
     def print_graph(self):
         for i in range(self.num_vertices):
             print(" {} : ".format(i), end="")
-            if self.graph[i] is not None:
-                for ele in self.graph[i]:
-                    print(" -> {},{}".format(ele.vertex_id, ele.edge_weight), end="")
-            print("\n")
+            for ele in self.graph[i]:
+                print(" -> {},{}".format(ele.vertex_id, ele.edge_weight), end="")
+            print()
 
+    def get_edges(self):
+        edges = []
+        for i in range(self.num_vertices):
+            for ele in self.graph[i]:
+                edges.append(Edge(i, ele.vertex_id, ele.edge_weight))
+        return edges
 
 if __name__ == "__main__":
-    num_vertices = 5
+    num_vertices = 10
 
     graph = Graph(num_vertices)
     graph.add_edge(0, 1, 1)
