@@ -5,7 +5,6 @@ status:
     1 : intree
 """
 import RandomGraphGenerator
-from Kruskal import Kruskal
 from MaxHeap import MaxHeap
 
 
@@ -47,17 +46,23 @@ def Dijkstra_BW_v2(G, s, t):
                 dad[w.vertex_id] = v
                 fringer_heap.insert(w.vertex_id, min_bw)
 
-    return dad, b_width
+    path = []
+    cur = t
+    while (cur != -1):
+        path.append(cur)
+        cur = dad[cur]
+
+    for i in range(int(len(path) / 2)):
+        temp = path[i]
+        path[i] = path[-(i + 1)]
+        path[-(i + 1)] = temp
+
+    return path, b_width[t]
 
 
 if __name__ == "__main__":
     n = 10
     graph = RandomGraphGenerator.generate_graph(1, n)
-    graph.print_graph()
-    dad, b_width = Dijkstra_BW_v2(graph, 0, 9)
-    i = 9
-    while i != -1:
-        print(i, end=" ")
-        i = dad[i]
-    kruskal = Kruskal()
-    print(kruskal.Kruskal_BW(graph, 0, 9))
+    # graph.print_graph()
+    path, b_width = Dijkstra_BW_v2(graph, 0, 9)
+    print(path, b_width)

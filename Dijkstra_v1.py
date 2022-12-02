@@ -5,7 +5,6 @@ status:
     1 : intree
 """
 import RandomGraphGenerator
-from Kruskal import Kruskal
 
 
 def getLargestFringer(status, b_width):
@@ -54,17 +53,27 @@ def Dijkstra_BW_v1(G, s, t):
                 b_width[w.vertex_id] = min_bw
                 dad[w.vertex_id] = v
 
-    return dad, b_width
+    path = []
+    cur = t
+    while cur != -1: # connected graph, hence path must exist
+        path.append(cur)
+        cur = dad[cur]
+
+    for i in range(int(len(path)/2)):
+        temp = path[i]
+        path[i] = path[-(i+1)]
+        path[-(i+1)] = temp
+
+    return path, b_width[t]
 
 
 if __name__ == "__main__":
     n = 10
     graph = RandomGraphGenerator.generate_graph(1, n)
-    graph.print_graph()
-    dad, b_width = Dijkstra_BW_v1(graph, 0, 9)
-    i = 9
-    while i != -1:
-        print(i, end=" ")
-        i = dad[i]
-    kruskal = Kruskal()
-    print(kruskal.Kruskal_BW(graph, 0, 9))
+    # graph.print_graph()
+    path1, b_width1 = Dijkstra_BW_v1(graph, 0, 9)
+    print(path1, b_width1)
+
+
+
+

@@ -1,3 +1,5 @@
+import time
+
 import RandomGraphGenerator
 from Graph import Graph
 from HeapSort import heapSort
@@ -38,7 +40,9 @@ class Kruskal:
 
     def Kruskal_MST(self, G):
         edges = G.get_edges()
+        # st = time.time()
         heapSort(edges)
+        # print("heap sort time : ", time.time() - st)
         for i in range(G.num_vertices):
             self.makeSet()  # appending
 
@@ -54,9 +58,16 @@ class Kruskal:
     def Kruskal_BW(self, G, s, t):
         MST = self.Kruskal_MST(G)
         color = [0] * G.num_vertices
+        bw = 100000  # MAX
+        st = time.time()
+
         path = self.DFS(MST, color, s, t, [])
-        #TODO: BW value
-        return path
+        for i in range(len(path)-1):
+            for edge in G.graph[path[i]]:
+                if edge.vertex_id == path[i + 1]:
+                    bw = min(bw, edge.edge_weight)
+        print("path construction time:",time.time()-st)
+        return path, bw
 
     def DFS(self, G, color, s, t, path):
         color[s] = 1
@@ -71,9 +82,7 @@ class Kruskal:
 
 
 if __name__ == "__main__":
-    n = 10
-    graph = RandomGraphGenerator.generate_graph(1, n)
-    graph.print_graph()
-    print()
+    n = 5000
+    graph = RandomGraphGenerator.generate_graph(2, n)
     kruskal = Kruskal()
     print(kruskal.Kruskal_BW(graph, 0, 9))
