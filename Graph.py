@@ -59,7 +59,8 @@ class Graph:
         edges = []
         for i in range(self.num_vertices):
             for ele in self.graph[i]:
-                edges.append(Edge(i, ele.vertex_id, ele.edge_weight))
+                if i > ele.vertex_id: # Taking only one of the 2 entries per edge in list
+                    edges.append(Edge(i, ele.vertex_id, ele.edge_weight))
         return edges
 
 if __name__ == "__main__":

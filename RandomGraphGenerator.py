@@ -87,7 +87,7 @@ def generate_random_edge(num_vertices):
             return i, j, random_weight()
 
 
-def get_desparate_edge(graph, neighbour_count, vertices, limit, src):
+def get_desparate_edge(graph, vertices, neighbour_count, limit, src):
     if src is None:
         for i in range(len(neighbour_count)):
             if neighbour_count[i] < limit:
@@ -118,7 +118,7 @@ def get_unsatisfying_vertex(graph, vertices, neighbour_count, limit, src=None):
             neighbour_count.pop(j)
 
         if i > max_loop:
-            return get_desparate_edge(graph, neighbour_count, vertices, limit, src)
+            return get_desparate_edge(graph, vertices, neighbour_count, limit, src)
 
 
 if __name__ == "__main__":

@@ -21,7 +21,6 @@ def Dijkstra_BW_v1(G, s, t):
     status = []
     b_width = []
     dad = []
-    fringer_count = 0
 
     for v in range(G.num_vertices):
         status.append(-1)
@@ -34,24 +33,23 @@ def Dijkstra_BW_v1(G, s, t):
 
     for e in G.graph[s]:
         status[e.vertex_id] = 0
-        fringer_count += 1
         b_width[e.vertex_id] = e.edge_weight
         dad[e.vertex_id] = s
 
-    while fringer_count > 0:
-        v = getLargestFringer(status, b_width)
+    v = getLargestFringer(status, b_width)
+    while v != -1:
         status[v] = 1
-        fringer_count -= 1
         for w in G.graph[v]:
             min_bw = min(b_width[v], w.edge_weight)
             if status[w.vertex_id] == -1:
                 status[w.vertex_id] = 0
-                fringer_count += 1
                 b_width[w.vertex_id] = min_bw
                 dad[w.vertex_id] = v
             elif status[w.vertex_id] == 0 and b_width[w.vertex_id] < min_bw:
                 b_width[w.vertex_id] = min_bw
                 dad[w.vertex_id] = v
+
+        v = getLargestFringer(status, b_width)
 
     path = []
     cur = t
