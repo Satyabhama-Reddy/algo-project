@@ -9,7 +9,7 @@ from Kruskal import Kruskal
 from MaxHeap import MaxHeap
 
 
-def Dijkstra_BW(G, s, t):
+def Dijkstra_BW_v2(G, s, t):
     status = []
     b_width = []
     dad = []
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     n = 10
     graph = RandomGraphGenerator.generate_graph(1, n)
     graph.print_graph()
-    dad, b_width = Dijkstra_BW(graph, 0, 9)
+    dad, b_width = Dijkstra_BW_v2(graph, 0, 9)
     i = 9
     while i != -1:
         print(i, end=" ")

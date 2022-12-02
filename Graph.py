@@ -39,7 +39,7 @@ class Graph:
             return True
         else:
             # Debugging
-            print("Edge not added. Edge from {} to {} already exists".format(src, dest))
+            # print("Edge not added. Edge from {} to {} already exists".format(src, dest))
             return False
 
     def get_average_degree(self):

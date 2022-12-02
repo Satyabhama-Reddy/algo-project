@@ -1,6 +1,6 @@
 import random
 
-from Graph import Graph
+from Graph import Graph, Neighbour
 
 
 def generate_graph(version, num_vertices):
@@ -29,7 +29,7 @@ def generate_6_degree_graph(num_vertices):
             src, dest, weight = generate_random_edge(num_vertices)
 
     if graph.get_average_degree() != 6:
-        # To make up for repeated edges:
+        # To make up for repeated edges, just in case, but can never occur:
         print("This should not occur")
         while graph.get_average_degree() < 6:
             src, dest, weight = generate_random_edge(num_vertices)
@@ -44,19 +44,20 @@ def generate_20_percent_graph(num_vertices):
     neighbour_count = [2] * num_vertices  # Each vertex is connected to 2 other vertices.
     vertices = list(range(num_vertices))
     limit = int(0.2 * num_vertices)
-    while True:
-        print(neighbour_count)
-        src_ind = get_unsatisfying_vertex(vertices, neighbour_count, limit)
+    while len(neighbour_count) > 0:
+        src_ind = get_unsatisfying_vertex(graph, vertices, neighbour_count, limit)
         if src_ind is None:
             break
         while neighbour_count[src_ind] < limit:
-            dest_ind = generate_random_dest(vertices[src_ind], neighbour_count, vertices, limit)
+            dest_ind = get_unsatisfying_vertex(graph, vertices, neighbour_count, limit, vertices[src_ind])
+            if dest_ind is None:
+                break
             if graph.add_edge(vertices[src_ind], vertices[dest_ind], random_weight()):
                 neighbour_count[src_ind] += 1
                 neighbour_count[dest_ind] += 1
-            else:
-                if len(neighbour_count) <= 2:
-                    neighbour_count[src_ind] = limit
+                if neighbour_count[dest_ind] > limit:
+                    neighbour_count.pop(dest_ind)
+                    vertices.pop(dest_ind)
         neighbour_count.pop(src_ind)
         vertices.pop(src_ind)
 
@@ -86,30 +87,51 @@ def generate_random_edge(num_vertices):
             return i, j, random_weight()
 
 
-def generate_random_dest(src, neighbour_count, vertices, limit):
+def get_desparate_edge(graph, neighbour_count, vertices, limit, src):
+    if src is None:
+        for i in range(len(neighbour_count)):
+            if neighbour_count[i] < limit:
+                return i
+        return None
+    else:
+        for i in range(len(neighbour_count)):
+            if vertices[i] is not src and neighbour_count[i] < limit:
+                if Neighbour(vertices[i], 0) not in graph.graph[src]:
+                    return i
+        return None
+
+
+def get_unsatisfying_vertex(graph, vertices, neighbour_count, limit, src=None):
+    max_loop = 3
+    i = 0
     num_vertices = len(neighbour_count)
-    while True:
+    while num_vertices > 0:
+        i += 1
+        num_vertices = len(neighbour_count)
+        if num_vertices == 0:
+            return None
         j = random.randint(0, num_vertices - 1)
-        print(j) #TODO FIX INFINITE LOOP
         if src != vertices[j] and neighbour_count[j] < limit:
             return j
+        elif src is None and neighbour_count[j] >= limit:
+            vertices.pop(j)
+            neighbour_count.pop(j)
+
+        if i > max_loop:
+            return get_desparate_edge(graph, neighbour_count, vertices, limit, src)
 
 
-def get_unsatisfying_vertex(vertices, neighbour_count, limit):
-    index = None
-    if len(neighbour_count) == 1:
-        return index
+if __name__ == "__main__":
+    n = 5000
+    cg = generate_graph(2, n)
+    cnt = 0
+    edge_count = 0
+    for i in cg.graph:
+        if len(i) < int(0.2 * n):
+            print(len(i))
+            cnt += 1
+        edge_count += len(i)
+    if (cnt > 0):
+        print(str(cnt) + " vertices have less than 20% edges")
 
-    i = 0
-    while i < len(neighbour_count):
-        if neighbour_count[i] < limit:
-            index = i
-        else:
-            vertices.pop(i)
-            neighbour_count.pop(i)
-        i += 1
-    return index
-
-
-# cg = generate_graph(2, 20)
-# cg.print_graph()
+    print("Edge Count : ", edge_count)
