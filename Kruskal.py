@@ -1,4 +1,3 @@
-import RandomGraphGenerator
 from Graph import Graph
 from HeapSort import heapSort
 
@@ -78,9 +77,3 @@ class Kruskal:
                     return path
         path.pop()
 
-
-if __name__ == "__main__":
-    n = 5000
-    graph = RandomGraphGenerator.generate_graph(2, n)
-    kruskal = Kruskal()
-    print(kruskal.Kruskal_BW(graph, 0, 9))

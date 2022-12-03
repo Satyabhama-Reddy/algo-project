@@ -4,7 +4,6 @@ status:
     0 : fringer
     1 : intree
 """
-import RandomGraphGenerator
 from MaxHeap import MaxHeap
 
 
@@ -59,10 +58,3 @@ def Dijkstra_BW_v2(G, s, t):
 
     return path, b_width[t]
 
-
-if __name__ == "__main__":
-    n = 10
-    graph = RandomGraphGenerator.generate_graph(1, n)
-    # graph.print_graph()
-    path, b_width = Dijkstra_BW_v2(graph, 0, 9)
-    print(path, b_width)

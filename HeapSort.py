@@ -1,4 +1,4 @@
-from Graph import Edge
+# from Graph import Edge
 
 
 def leftIndex(pos):
@@ -40,12 +40,12 @@ def heapSort(edges):
         swap(edges, i, 0)
         heapify(edges, i, 0)
 
-if __name__ == '__main__':
-
-    arr = [Edge(12,1,2), Edge(12,1,3), Edge(12,1,2), Edge(12,1,1)]
-
-    heapSort(arr)
-    N = len(arr)
-
-    for i in range(N):
-        print(arr[i].u, arr[i].v, arr[i].w)
+# if __name__ == '__main__':
+#
+#     arr = [Edge(12,1,2), Edge(12,1,3), Edge(12,1,2), Edge(12,1,1)]
+#
+#     heapSort(arr)
+#     N = len(arr)
+#
+#     for i in range(N):
+#         print(arr[i].u, arr[i].v, arr[i].w)

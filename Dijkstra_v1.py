@@ -4,7 +4,6 @@ status:
     0 : fringer
     1 : intree
 """
-import RandomGraphGenerator
 
 
 def getLargestFringer(status, b_width):
@@ -63,14 +62,6 @@ def Dijkstra_BW_v1(G, s, t):
         path[-(i+1)] = temp
 
     return path, b_width[t]
-
-
-if __name__ == "__main__":
-    n = 10
-    graph = RandomGraphGenerator.generate_graph(1, n)
-    # graph.print_graph()
-    path1, b_width1 = Dijkstra_BW_v1(graph, 0, 9)
-    print(path1, b_width1)
 
 
 

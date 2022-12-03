@@ -121,17 +121,17 @@ def get_unsatisfying_vertex(graph, vertices, neighbour_count, limit, src=None):
             return get_desparate_edge(graph, vertices, neighbour_count, limit, src)
 
 
-if __name__ == "__main__":
-    n = 5000
-    cg = generate_graph(2, n)
-    cnt = 0
-    edge_count = 0
-    for i in cg.graph:
-        if len(i) < int(0.2 * n):
-            print(len(i))
-            cnt += 1
-        edge_count += len(i)
-    if (cnt > 0):
-        print(str(cnt) + " vertices have less than 20% edges")
-
-    print("Edge Count : ", edge_count)
+# if __name__ == "__main__":
+#     n = 5000
+#     cg = generate_graph(2, n)
+#     cnt = 0
+#     edge_count = 0
+#     for i in cg.graph:
+#         if len(i) < int(0.2 * n):
+#             print(len(i))
+#             cnt += 1
+#         edge_count += len(i)
+#     if (cnt > 0):
+#         print(str(cnt) + " vertices have less than 20% edges")
+#
+#     print("Edge Count : ", edge_count)

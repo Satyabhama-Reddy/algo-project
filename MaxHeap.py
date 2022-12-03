@@ -1,5 +1,4 @@
 import random
-import sys
 
 
 class MaxHeap:
@@ -110,21 +109,21 @@ class MaxHeap:
             self.pushDown(current)
 
 
-if __name__ == "__main__":
-
-    n = 5000
-    vertices = list(range(n))
-    random.shuffle(vertices)
-    maxHeap = MaxHeap(n)
-    for i in vertices:
-        maxHeap.insert(i, random.randint(0, 100000))
-    maxHeap.assertHeapProperty()
-    for i in range(n):
-        a = random.randint(0, n-1)
-        maxHeap.delete(a)
-        # print(maxHeap.P)
-        maxHeap.assertHeapProperty()
-        # maxHeap.insert(random.randint(0, n-1))
-    # maxHeap.printHeap()
-
-    print("The Max val is " + str(maxHeap.maximum())+ ","+str(maxHeap.valueByVertex(maxHeap.maximum())))
+# if __name__ == "__main__":
+#
+#     n = 5000
+#     vertices = list(range(n))
+#     random.shuffle(vertices)
+#     maxHeap = MaxHeap(n)
+#     for i in vertices:
+#         maxHeap.insert(i, random.randint(0, 100000))
+#     maxHeap.assertHeapProperty()
+#     for i in range(n):
+#         a = random.randint(0, n-1)
+#         maxHeap.delete(a)
+#         # print(maxHeap.P)
+#         maxHeap.assertHeapProperty()
+#         # maxHeap.insert(random.randint(0, n-1))
+#     # maxHeap.printHeap()
+#
+#     print("The Max val is " + str(maxHeap.maximum())+ ","+str(maxHeap.valueByVertex(maxHeap.maximum())))

@@ -63,15 +63,15 @@ class Graph:
                     edges.append(Edge(i, ele.vertex_id, ele.edge_weight))
         return edges
 
-if __name__ == "__main__":
-    num_vertices = 10
-
-    graph = Graph(num_vertices)
-    graph.add_edge(0, 1, 1)
-    graph.add_edge(0, 2, 1)
-    graph.add_edge(0, 3, 3)
-    graph.add_edge(0, 3, 1)
-    graph.add_edge(1, 2, 1)
-    graph.add_edge(2, 1, 1)
-
-    graph.print_graph()
+# if __name__ == "__main__":
+#     num_vertices = 10
+#
+#     graph = Graph(num_vertices)
+#     graph.add_edge(0, 1, 1)
+#     graph.add_edge(0, 2, 1)
+#     graph.add_edge(0, 3, 3)
+#     graph.add_edge(0, 3, 1)
+#     graph.add_edge(1, 2, 1)
+#     graph.add_edge(2, 1, 1)
+#
+#     graph.print_graph()
